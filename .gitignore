@@ -1,1 +1,4 @@
 .DS_Store
+.cursor/skills/visualize-agent-resource
+node_modules
+dist
