@@ -30,7 +30,7 @@ SDD does not replace them. The spec states observable behavior as scenarios; you
 
 ## The OPSX lifecycle
 
-![OPSX lifecycle](images/OPSX_lifecycle.png)
+OPSX lifecycle
 
 Each artifact owns one question and stays out of the others' territory.
 
@@ -97,6 +97,51 @@ Resetting context between phases keeps the agent focused:
 | Start fresh         | `/clear`    | New chat (`Cmd + N`)                     |
 | Compact the history | `/compact`  | Automatic — no manual command in the IDE |
 
+## Recommended Everyday Flow Example
+
+```text
+You: /opsx:explore
+You: Here's the section of our PRD about checkout. I'm implementing the
+     "guest logout" requirement next.
+     [paste the relevant requirement]
+AI:  [reads it, asks clarifying questions, then helps scope a change]
+
+You: /opsx:propose add-logout-button
+AI:  Created openspec/changes/add-logout-button/
+     ✓ proposal.md — why and what
+     ✓ specs/      — the new requirement and its scenarios
+     ✓ design.md   — technical approach
+     ✓ tasks.md    — implementation checklist
+     Ready for implementation. Run /opsx:apply.
+
+You: /opsx:apply
+AI:  Working through tasks...
+     ✓ 1.1 Add logout button to header
+     ✓ 1.2 Clear session on click
+     ✓ 1.3 Add confirmation dialog
+     All tasks complete!
+
+You: /opsx:archive
+AI:  Archiving add-logout-button...
+     ✓ Merged specs into openspec/specs/auth/spec.md
+     ✓ Moved to openspec/changes/archive/2026-06-22-add-logout-button/
+     Done. Ready for the next change.
+```
+
+### Existing Project
+
+You do not document your whole codebase to start. You write specs only for what you're about to change. Your first change documents the slice it touches, the next change documents its slice, and over months your specs fill in naturally around the work you actually do.
+
+### Editing & Iterating on a Change
+
+Every artifact in a change is just a Markdown file you can edit at any time. There is no locked "planning phase," no approval gate, no special edit mode to enter.
+
+**Two ways to edit**
+
+1. Edit the file directly. Artifacts are plain Markdown in `openspec/changes/<name>/`. Open `proposal.md`, `design.md`, `tasks.md`, or a delta spec under `specs/` in your editor and change it. Nothing else is required.
+2. Ask your AI to revise it. In chat, just say what you want: "Update the proposal to drop the caching idea and add a rate-limit section," or "the design should use a queue, not polling." The AI edits the artifact for you, using the rest of the change as context.
+
+**Note:** Use whichever fits the moment. Small wording tweak? Edit the file. Substantive rethink? Let the AI revise with full context.
 
 ## Lap 1 — Build the site
 
@@ -121,7 +166,7 @@ you must verify the content match), and let me dig in further from there. When I
 click a file, show me real examples of what it contains, plus a link to its
 documentation if it has any.
 
-Focus on OpenSpec, Spec Kit, and Superpowers, and research them. If you find
+Focus on OpenSpec, Spec Kit, and Kiro, and research them. If you find
 other SDD tools that look more promising, include them too.
 ```
 
@@ -191,3 +236,7 @@ openspec validate
 /opsx:apply
 ```
 
+## Reference
+
+- [Examples](https://github.com/Fission-AI/OpenSpec/blob/main/docs/examples.md)
+- [Using OpenSpec in an Existing Project](https://github.com/Fission-AI/OpenSpec/blob/main/docs/existing-projects.md)
