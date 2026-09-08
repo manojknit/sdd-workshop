@@ -30,7 +30,7 @@ SDD does not replace them. The spec states observable behavior as scenarios; you
 
 ## The OPSX lifecycle
 
-OPSX lifecycle
+![OPSX lifecycle](images/OPSX_lifecycle.png)
 
 Each artifact owns one question and stays out of the others' territory.
 
