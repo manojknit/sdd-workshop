@@ -1,0 +1,55 @@
+schema: workshop-compact
+
+context: |
+  This repository is used for a hands-on Spec-Driven Development workshop.
+  Participants read each planning artifact live and should understand it in
+  two to three minutes. Optimize for clear traceability and the smallest
+  complete change, with enough room to explain the reasoning.
+
+  Scope discipline:
+  - Treat the explicit request and confirmed exploration decisions as the scope boundary.
+  - Research informs facts and choices; it does not create new product requirements.
+  - Do not add optional ideas, classifications, scoring, metadata systems,
+    administrative features, automation, extensibility, or future-proofing
+    unless explicitly requested or required by existing behavior.
+  - When several interpretations work, choose the simplest one. State assumptions
+    that materially affect behavior or scope.
+  - A capability is a cohesive outcome that can be understood and tested
+    independently, not a page, component, route, file, data structure,
+    technical layer, framework choice, or setup concern.
+
+  Writing discipline:
+  - Use plain English, descriptive headings, and readable bullets.
+  - State each fact once, in the artifact where it belongs.
+  - Proposal explains why and scope; specs define durable observable behavior;
+    design records consequential choices; tasks describe execution.
+
+rules:
+  proposal:
+    - "Target 220-360 words; never exceed 440 words."
+    - "Why: a short paragraph of 2-4 sentences."
+    - "What Changes: 4-8 bullets, each naming one observable outcome."
+    - "Capabilities: prefer 2-5 cohesive outcomes, each described in one or two plain sentences."
+    - "Impact: 0-3 bullets of concrete effects on existing code, dependencies, or users."
+
+  specs:
+    - "Target 160-320 words per capability spec; never exceed 400 words unless a complete MODIFIED requirement must be preserved."
+    - "Start directly with an OpenSpec delta operation header; do not add a title, summary, or preamble before it."
+    - "Use plain-English requirement titles that reveal the behavior at a glance."
+    - "Prefer 2-5 requirements per capability; include only durable behavior whose omission would make the implementation observably wrong."
+    - "For an ADDED requirement, use one short normative sentence with exactly one SHALL, kept on one physical line."
+    - "Use one or two scenarios per requirement; add a second only for a materially different outcome or failure path."
+    - "Keep each scenario to one WHEN and one THEN; use GIVEN or AND only when essential to remove ambiguity."
+
+  design:
+    - "Target 220-420 words; never exceed 560 words."
+    - "Use 1-4 decisions. If there is no consequential fork, say that implementation follows existing patterns."
+    - "For each decision, give a short Choice, Why, and Trade-off entry."
+    - "Context is limited to 1-4 bullets needed to understand the decisions."
+    - "Do not repeat proposal scope or specification behavior, and do not include diagrams."
+
+  tasks:
+    - "Target 6-12 checkbox tasks in 2-5 numbered sections; never exceed 16 tasks."
+    - "Each task must be one line, start with a verb, and name a verifiable outcome."
+    - "A task is one coherent, independently reviewable implementation slice, not one file edit."
+    - "Include 1-4 focused verification tasks; do not duplicate every scenario as a task."

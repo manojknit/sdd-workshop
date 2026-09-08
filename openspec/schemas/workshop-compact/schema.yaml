@@ -1,0 +1,93 @@
+name: workshop-compact
+version: 1
+description: Compact full-lifecycle OpenSpec workflow for a time-boxed workshop
+
+artifacts:
+  - id: proposal
+    generates: proposal.md
+    description: Concise statement of intent, scope, and capability boundaries
+    template: proposal.md
+    instruction: |
+      Create a compact proposal that establishes why the change matters and what
+      outcomes are in scope.
+
+      Use only the template sections. Keep capability boundaries cohesive: a
+      capability is an independently understandable and testable outcome, not a
+      page, component, route, file, data model, framework layer, or setup step.
+      Research may support facts, but must not expand scope.
+
+      Each capability listed requires a corresponding spec file. Exclude
+      implementation choices, alternatives, examples, and design rationale.
+    requires: []
+
+  - id: specs
+    generates: "specs/**/*.md"
+    description: Small, testable behavioral delta specifications
+    template: spec.md
+    instruction: |
+      Create one delta spec per capability named in the proposal.
+
+      Begin directly with a valid delta header: ADDED, MODIFIED, REMOVED, or
+      RENAMED Requirements. Do not place a title or summary before it.
+
+      Each requirement uses `### Requirement: <plain-language behavior>`,
+      followed by normative text and at least one `#### Scenario:` with WHEN and
+      THEN bullets. For ADDED requirements, prefer one short sentence containing
+      exactly one SHALL and keep it on one physical line.
+
+      Include only durable observable contracts. Prefer 2-5 requirements and one
+      or two scenarios per requirement. A scenario illustrates the contract
+      without adding scope or repeating it in different words.
+
+      Exclude architecture, implementation mechanics, incidental UI structure,
+      data types, rationale, test commentary, research notes, and diagrams.
+
+      For MODIFIED requirements, preserve and edit the complete existing
+      requirement block. REMOVED requirements include Reason and Migration.
+      RENAMED requirements use FROM and TO.
+    requires:
+      - proposal
+
+  - id: design
+    generates: design.md
+    description: Short record of consequential implementation decisions
+    template: design.md
+    instruction: |
+      Record only consequential implementation decisions that are not already
+      settled by the codebase or specifications.
+
+      Use 1-4 context bullets and 1-4 decisions. Each decision states Choice,
+      Why, and Trade-off concisely. If no consequential fork exists, say that
+      implementation follows existing patterns.
+
+      Do not restate scope or requirements. Exclude generic goals, alternatives
+      lists, risk inventories, migration plans, open questions, line-by-line
+      implementation detail, and diagrams.
+    requires:
+      - proposal
+      - specs
+
+  - id: tasks
+    generates: tasks.md
+    description: Reviewable implementation slices with focused verification
+    template: tasks.md
+    instruction: |
+      Create an implementation checklist using 2-5 numbered sections and
+      normally 6-12 checkbox tasks.
+
+      Every task follows `- [ ] X.Y <verb-led, verifiable outcome>`. A task is a
+      coherent reviewable slice, not one file or component edit. Combine related
+      work that delivers one outcome, order by dependency, and include 1-4
+      focused verification tasks without duplicating every scenario.
+    requires:
+      - specs
+      - design
+
+apply:
+  requires: [tasks]
+  tracks: tasks.md
+  instruction: |
+    Implement the approved artifacts in task order and mark tasks complete.
+    Preserve the scope and observable contracts in the specs. Do not add
+    unrequested features while applying the change. Pause only for a genuine
+    blocker or a decision that would change the approved contract.
